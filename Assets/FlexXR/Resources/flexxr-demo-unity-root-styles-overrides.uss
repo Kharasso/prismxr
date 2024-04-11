@@ -1,12 +1,16 @@
-/*****************************************************************************/
-/* Fixes: DropdownField: this has to be on the hierarchy root                */
-/*****************************************************************************/
-
-.unity-base-field__input{
+.unity-base-field__input {
     flex: 1 0 0;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
+}
+
+#unity-tracker {
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
 }
 
 .unity-base-popup-field {
@@ -18,7 +22,7 @@
     -unity-text-align: middle-left;
     white-space: nowrap;
     flex-grow: 1;
-    color:  rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
 }
 
 .unity-base-popup-field__arrow {
@@ -44,7 +48,7 @@
     padding-left: 3px;
     padding-right: 3px;
     padding-top: 0;
-    padding-bottom: 1px; 
+    padding-bottom: 1px;
     border-width: 1px;
     border-left-color: rgb(55, 55, 55);
     border-right-color: rgb(55, 55, 55);
@@ -75,10 +79,6 @@
     white-space: nowrap;
     color: rgb(196, 196, 196);
 }
-
-/*****************************************************************************/
-/* Fixes: Generic Dropdown Menu                                              */
-/*****************************************************************************/
 
 .unity-base-field__input {
     flex: 1 0 0;
@@ -150,7 +150,7 @@
 .unity-base-dropdown__container-outer {
     position: absolute;
     border-width: 1px;
-    border-color:  rgb(8, 97, 104);
+    border-color: rgb(8, 97, 104);
     background-color: rgb(8, 97, 104);
     border-radius: 3px;
 }

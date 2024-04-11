@@ -1,0 +1,38 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/FlexXR/Resources/flexxr-demo-styles.uss?fileID=7433441132597879392&amp;guid=27d95b6aa2853f448b30e08690d91b5d&amp;type=3#flexxr-demo-styles" />
+    <Style src="project://database/Assets/FlexXR/Resources/flexxr-demo-unity-root-styles-overrides.uss?fileID=7433441132597879392&amp;guid=c4c497b636654d4abdfbbd1547ca9de0&amp;type=3#flexxr-demo-unity-root-styles-overrides" />
+    <ui:VisualElement picking-mode="Ignore" style="flex-grow: 0; align-items: flex-end; justify-content: flex-start; width: auto; height: auto; font-size: 28px; max-width: 750px;">
+        <FlexXR.Runtime.FlexXRPanel.FlexXRContainer name="FlexXRContent" class="dp04-solid" style="flex-grow: 0; align-items: flex-start; max-height: none; background-color: rgba(0, 150, 136, 0.9); width: auto; align-self: flex-start;">
+            <ui:VisualElement style="width: auto; height: auto; max-height: none; background-color: rgba(0, 0, 0, 0);">
+                <ui:VisualElement name="Header" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); flex-direction: row; margin-bottom: 10px; flex-shrink: 0;">
+                    <ui:Label tabindex="-1" text="About this piece of Art/Artifact" display-tooltip-when-elided="true" name="HeaderText" style="-unity-font-style: bold; margin-left: 10px;" />
+                    <ui:Button text="X" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CloseButton" style="align-self: auto; right: 2px; position: absolute; top: 2px; height: 40px; width: 40px; background-color: rgba(255, 255, 255, 0); color: rgb(183, 183, 183); border-left-color: rgb(197, 197, 197); border-right-color: rgb(197, 197, 197); border-top-color: rgb(197, 197, 197); border-bottom-color: rgb(197, 197, 197);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="LearnMore" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); width: auto; height: auto; cursor: initial; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; align-items: flex-start; max-height: none;">
+                    <ui:VisualElement name="VisualElement" style="flex-grow: 0; background-color: rgba(0, 61, 50, 0); height: auto; flex-shrink: 0; flex-wrap: nowrap;">
+                        <ui:ScrollView style="max-height: 600px; background-color: rgba(0, 61, 50, 0.5); width: auto;">
+                            <ui:Label tabindex="-1" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum" display-tooltip-when-elided="true" name="CuratorComment" style="margin-bottom: 10px; margin-left: 5px; flex-wrap: nowrap; white-space: normal;" />
+                        </ui:ScrollView>
+                    </ui:VisualElement>
+                    <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); height: auto; flex-shrink: 0;">
+                        <ui:Label tabindex="-1" text="Expand items below for more actions" display-tooltip-when-elided="true" name="Label" style="margin-bottom: 10px; margin-left: 5px;" />
+                    </ui:VisualElement>
+                    <ui:Foldout text="Guest Annotations:" value="false" name="SupportsAllUIElements" class="foldout-toggle-panel" style="cursor: initial; margin-bottom: 5px; margin-top: 15px; width: 100%; max-height: 500px;" />
+                    <ui:ScrollView scroll-deceleration-rate="0" class="base-gemplay-list-with-scrollbar" style="width: 100%; min-height: auto; max-height: none; background-color: rgba(0, 61, 50, 0.5);">
+                        <ui:VisualElement name="VisualElement" style="margin-right: 10px; margin-left: 10px;">
+                            <ui:Label text="Sean&#10;2024-03-17&#10;This experience is very interesting.&#10;&#10;Agga&#10;2024-03-16&#10;The display&apos;s minimal context fails to fully engage visitors" display-tooltip-when-elided="true" name="GuestCommentText" style="white-space: normal; margin-top: 10px; margin-bottom: 10px;" />
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+                    <ui:Foldout text="Leave Your Annotations" value="false" name="CommentToggle" class="foldout-toggle-panel" style="cursor: initial; margin-bottom: 5px; margin-top: 15px; width: 100%; max-width: none;" />
+                    <ui:ScrollView scroll-deceleration-rate="0" touch-scroll-type="Clamped" mouse-wheel-scroll-size="18" name="ScrollView" class="base-gemplay-list-with-scrollbar" style="width: 100%; min-height: auto; background-color: rgba(255, 255, 255, 0.03);">
+                        <ui:VisualElement style="margin-right: 10px; margin-left: 10px; align-items: center;">
+                            <ui:TextField picking-mode="Ignore" label="Guest Name:" value=" " text="filler text" focusable="true" multiline="false" hide-mobile-input="false" is-delayed="false" name="NewGuestName" class="tn-input-fields" style="margin-bottom: 10px; margin-top: 5px; flex-direction: column; align-items: flex-start; justify-content: center; align-self: center; width: 100%; height: 80px; overflow: hidden; position: relative; flex-wrap: wrap; flex-basis: auto; -unity-text-align: upper-left; white-space: normal; text-overflow: clip; display: flex;" />
+                            <ui:TextField picking-mode="Ignore" label="Annotation" value=" " text="filler text" focusable="true" multiline="true" hide-mobile-input="false" is-delayed="false" name="NewGuestComment" class="tn-input-fields" style="margin-bottom: 10px; margin-top: 5px; flex-direction: column; align-items: flex-start; justify-content: center; align-self: center; width: 100%; height: 200px; overflow: hidden; position: relative; flex-wrap: wrap; flex-basis: auto; -unity-text-align: upper-left; white-space: normal; text-overflow: clip; display: flex;" />
+                            <ui:Button text="Submit" display-tooltip-when-elided="true" name="SubmitButton" class="tn-blue-button-solid" style="margin-bottom: 25px; margin-top: 10px; color: rgb(241, 241, 241); background-color: rgb(8, 97, 104); width: 150px; justify-content: center; height: 40px;" />
+                        </ui:VisualElement>
+                    </ui:ScrollView>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </FlexXR.Runtime.FlexXRPanel.FlexXRContainer>
+    </ui:VisualElement>
+</ui:UXML>

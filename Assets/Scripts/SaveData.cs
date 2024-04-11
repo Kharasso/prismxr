@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class SaveData
     {
         public string comment;
         public string playerName;
+        public long commentEpoch;
         public int playerID;
         public int playerCommentID;
     }

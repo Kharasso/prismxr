@@ -26,7 +26,7 @@ public class AnnotationSummarySpawner : MonoBehaviour
 
         
 
-        string targetName = "AnnotationUI" + caller.name;
+        string targetName = "AnnotationSummary";
 
         Debug.Log(targetName);
         Debug.Log(GameObject.Find(targetName));

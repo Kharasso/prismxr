@@ -74,7 +74,7 @@ namespace Keyboard
         private float shiftDoubleClickDelay = 0.5f;
 
         public UnityEvent onKeyboardModeChanged;
-        public ObjectDataManager objDataManager;
+        public GameObject objDataManager;
 
         private void Awake()
         {
