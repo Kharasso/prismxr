@@ -514,3 +514,18 @@
     font-size: 56px;
     color: rgb(197, 197, 197);
 }
+
+.choice-button {
+    justify-content: center;
+    align-self: center;
+    font-size: 28px;
+    width: 200px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(171, 171, 171);
+    position: relative;
+    margin-bottom: 12px;
+}
