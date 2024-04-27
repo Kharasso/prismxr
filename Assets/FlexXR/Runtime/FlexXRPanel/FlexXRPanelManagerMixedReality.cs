@@ -10,11 +10,8 @@ namespace FlexXR.Runtime.FlexXRPanel
     {
         private int     XRRayCount       => _xrRayInteractors.Count;
         private Vector3 XRRayOrigin      => _xrRayInteractors[0].rayOriginTransform.position;
-        private Vector3 XRRayOrigin2     => _xrRayInteractors[1].rayOriginTransform.position;
         private Vector3 XRRayDirection   => _xrRayInteractors[0].rayOriginTransform.forward;
-        private Vector3 XRRayDirection2  => _xrRayInteractors[1].rayOriginTransform.forward;
         private float   XRRayMaxDistance => _xrRayInteractors[0].maxRaycastDistance;
-        private float  XRRayMaxDistance2 => _xrRayInteractors[1].maxRaycastDistance;
 
         private void AwakeMixedReality()
         {
@@ -93,28 +90,42 @@ namespace FlexXR.Runtime.FlexXRPanel
 
         private void OnActivated(ActivateEventArgs args)
         {
-            /*            switch (args.interactorObject)
-                        {
-                            case XRRayInteractor xrRayInteractor:
-                                if (_xrRayInteractors.Count == 0) return;
-            *//*                    if (xrRayInteractor != _xrRayInteractors[0]) return;*//*
-                                SendPointerDownEvent();
-                                break;
-                        }*/
-            SendPointerDownEvent();
+            switch (args.interactorObject)
+            {
+                case XRRayInteractor xrRayInteractor:
+                    if (_xrRayInteractors.Count == 0) return;
+/*                    if (xrRayInteractor != _xrRayInteractors[0]) return;*/
+
+                    if (xrRayInteractor != _xrRayInteractors[0])
+                    {
+                        XRRayInteractor temp = _xrRayInteractors[0];
+                        _xrRayInteractors[0] = xrRayInteractor;
+                        _xrRayInteractors[1] = temp;
+                    }
+
+                    SendPointerDownEvent();
+                    break;
+            }
+
         }
 
         private void OnDeactivated(DeactivateEventArgs args)
         {
-  /*          switch (args.interactorObject)
+            switch (args.interactorObject)
             {
                 case XRRayInteractor xrRayInteractor:
                     if (_xrRayInteractors.Count == 0) return;
-*//*                    if (xrRayInteractor != _xrRayInteractors[0]) return;*//*
+                    /*                    if (xrRayInteractor != _xrRayInteractors[0]) return;*/
+                    if (xrRayInteractor != _xrRayInteractors[0])
+                    {
+                        XRRayInteractor temp = _xrRayInteractors[0];
+                        _xrRayInteractors[0] = xrRayInteractor;
+                        _xrRayInteractors[1] = temp;
+                    }
                     SendPointerUpEvent();
                     break;
-            }*/
-            SendPointerUpEvent();
+            }
+
         }
         #endregion
 

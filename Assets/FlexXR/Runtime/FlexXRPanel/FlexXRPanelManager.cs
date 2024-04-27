@@ -45,10 +45,7 @@ namespace FlexXR.Runtime.FlexXRPanel
         
         [Tooltip("Pixel position of the active pointer on the panel.")]
         [SerializeField] internal Vector2 flexPosition;
-
-        [Tooltip("Pixel position of the active pointer on the panel.")]
-        [SerializeField] internal Vector2 flexPosition2;
-
+        
         [Tooltip("Name of the element hovered by the active pointer on the panel.")]
         [SerializeField] internal string  hoveredElementName;
         
@@ -84,8 +81,7 @@ namespace FlexXR.Runtime.FlexXRPanel
         public FlexXRPanelElements flexXRPanelElements;
         
         private VisualElement _cursor;
-        private VisualElement _cursor2;
-
+        
         #region PanelSettings
         private void ModifyPanelSettingsFor(InteractionMode interactionMode)
         {
@@ -204,19 +200,6 @@ namespace FlexXR.Runtime.FlexXRPanel
                 }
             };
 
-            _cursor2 = new VisualElement
-            {
-                name = "FlexXR Cursor 2",
-                pickingMode = PickingMode.Ignore,
-                style =
-                {
-                    position        = Position.Absolute,
-                    width           = runtimeSettings.mixedReality.cursor2.inactiveSize,
-                    height          = runtimeSettings.mixedReality.cursor2.inactiveSize,
-                    backgroundImage = runtimeSettings.mixedReality.cursor2.texture
-                }
-            };
-
             document ??= GetComponent<UIDocument>();
             if (document is null)
             {
@@ -262,9 +245,7 @@ namespace FlexXR.Runtime.FlexXRPanel
 
             flexXRPanelElements = new FlexXRPanelElements(document);
             flexXRPanelElements.RootVisualElement.Add(_cursor);
-            flexXRPanelElements.RootVisualElement.Add(_cursor2);
             _cursor.style.display = DisplayStyle.None;
-            _cursor2.style.display = DisplayStyle.None;
 
 #if XRI_EXISTS
             AwakeMixedReality();
@@ -308,8 +289,7 @@ namespace FlexXR.Runtime.FlexXRPanel
             document.panelSettings.scale = runtimeSettings.panelScale;
             
             _cursor.style.display     = DisplayStyle.None;
-            _cursor2.style.display    = DisplayStyle.None;
-
+            
             WorldContentActive = ActiveInteractionMode != InteractionMode.Screen;
             if (!WorldContentActive) return;
 
@@ -329,7 +309,6 @@ namespace FlexXR.Runtime.FlexXRPanel
             if (!PointerRaycastIsHitting)
             {
                 FlexPosition = InvalidPixelPosition;
-                FlexPosition2 = InvalidPixelPosition;
                 return;
             }
             
@@ -339,12 +318,8 @@ namespace FlexXR.Runtime.FlexXRPanel
             
             var newFlexPosition = new Vector2(
                 document.panelSettings.targetTexture.width  / document.panelSettings.scale * _raycastHit.textureCoord.x,
-                document.panelSettings.targetTexture.height / document.panelSettings.scale * (1 - _raycastHit.textureCoord.y));
-
-            var newFlexPosition2 = new Vector2(
-                document.panelSettings.targetTexture.width / document.panelSettings.scale * _raycastHit2.textureCoord.x,
-                document.panelSettings.targetTexture.height / document.panelSettings.scale * (1 - _raycastHit2.textureCoord.y));
-
+                document.panelSettings.targetTexture.height / document.panelSettings.scale * (1 - _raycastHit.textureCoord.y)); 
+            
             if ((newFlexPosition - _lastFlexPosition).magnitude > runtimeSettings.advanced.pointerSensitivity)
             {
                 FlexPosition               = newFlexPosition;
@@ -356,19 +331,7 @@ namespace FlexXR.Runtime.FlexXRPanel
                 
                 SendPointerMoveEvent();
             }
-
-            if ((newFlexPosition2 - _lastFlexPosition2).magnitude > runtimeSettings.advanced.pointerSensitivity)
-            {
-                FlexPosition2 = newFlexPosition2;
-
-                _cursor2.transform.position = new Vector3(
-                    FlexPosition2.x - _cursor2.localBound.width / 2,
-                    FlexPosition2.y - _cursor2.localBound.height / 2,
-                    _cursor2.transform.position.z);
-
-                SendPointerMoveEvent();
-            }
-
+            
 #if UNITY_EDITOR
             _hoveredElement         = document.rootVisualElement.panel.Pick(FlexPosition);
             info.hoveredElementName = _hoveredElement is null ? "null" : _hoveredElement.name;
@@ -450,13 +413,9 @@ namespace FlexXR.Runtime.FlexXRPanel
 
         #region Raycasting
         private Vector3    _rayOrigin;
-        private Vector3    _rayOrigin2;
         private Vector3    _rayDirection;
-        private Vector3    _rayDirection2;
         private float      _rayMaxDistance;
-        private float      _rayMaxDistance2;
         private RaycastHit _raycastHit;
-        private RaycastHit _raycastHit2;
 
         private bool PointerRaycastIsHitting
         {
@@ -471,7 +430,6 @@ namespace FlexXR.Runtime.FlexXRPanel
         private void UpdateRaycast()
         {
             Ray ray;
-            Ray ray2;
             switch (ActiveInteractionMode)
             {
                 case InteractionMode.None:
@@ -480,19 +438,14 @@ namespace FlexXR.Runtime.FlexXRPanel
                     return;
                 case InteractionMode.World:
                     ray             = info.camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-                    ray2            = info.camera.ScreenPointToRay(Mouse.current.position.ReadValue());
                     _rayMaxDistance = 100;
                     break;
                 case InteractionMode.MixedReality:
 #if XRI_EXISTS
                     _rayOrigin      = XRRayOrigin;
                     _rayDirection   = XRRayDirection;
-                    _rayOrigin2      = XRRayOrigin2;
-                    _rayDirection2   = XRRayDirection2;
                     ray             = new Ray(_rayOrigin, _rayDirection);
-                    ray2            = new Ray(_rayOrigin2, _rayDirection2);
                     _rayMaxDistance = XRRayMaxDistance;
-                    _rayMaxDistance2 = XRRayMaxDistance2;
                     break;
 #else
                     enabled = false;
@@ -501,31 +454,12 @@ namespace FlexXR.Runtime.FlexXRPanel
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            if (ActiveInteractionMode != InteractionMode.MixedReality)
-            {
-                var hitAPanel = Physics.Raycast(
+            var hitAPanel = Physics.Raycast(
                 ray,
                 out _raycastHit,
                 maxDistance: _rayMaxDistance);
 
-                PointerRaycastIsHitting = hitAPanel && _raycastHit.collider == _worldMeshCollider;
-            }
-            else
-            {
-                var hitAPanel = Physics.Raycast(
-                ray,
-                out _raycastHit,
-                maxDistance: _rayMaxDistance);
-
-                var hitAPanel2 = Physics.Raycast(
-                ray2,
-                out _raycastHit2,
-                maxDistance: _rayMaxDistance2);
-
-                PointerRaycastIsHitting = (hitAPanel && _raycastHit.collider == _worldMeshCollider) || (hitAPanel2 && _raycastHit2.collider == _worldMeshCollider);
-            }
-            
+            PointerRaycastIsHitting = hitAPanel && _raycastHit.collider == _worldMeshCollider;
         }
         
         #endregion
@@ -546,20 +480,8 @@ namespace FlexXR.Runtime.FlexXRPanel
                 info.flexPosition = value;
             }
         }
-
-        private Vector2 FlexPosition2
-        {
-            get => info.flexPosition2;
-            set
-            {
-                _lastFlexPosition2 = value == InvalidPixelPosition ? InvalidPixelPosition : info.flexPosition2;
-
-                info.flexPosition2 = value;
-            }
-        }
         private Vector2 _lastFlexPosition;
-        private Vector2 _lastFlexPosition2;
-
+        
         private static Touch Touch(TouchPhase phase, Vector2 pixelUV, Vector2 pixelUVLastFrame)
         {
             return new Touch 
@@ -585,20 +507,7 @@ namespace FlexXR.Runtime.FlexXRPanel
         {
             return PointerUpEvent.GetPooled(Touch(TouchPhase.Ended, FlexPosition, _lastFlexPosition));
         }
-
-        private PointerDownEvent WorldPanelPointerDownEvent2()
-        {
-            return PointerDownEvent.GetPooled(Touch(TouchPhase.Began, FlexPosition2, _lastFlexPosition2));
-        }
-        private PointerMoveEvent WorldPanelPointerMoveEvent2()
-        {
-            return PointerMoveEvent.GetPooled(Touch(TouchPhase.Moved, FlexPosition2, _lastFlexPosition2));
-        }
-        private PointerUpEvent WorldPanelPointerUpEvent2()
-        {
-            return PointerUpEvent.GetPooled(Touch(TouchPhase.Ended, FlexPosition2, _lastFlexPosition2));
-        }
-
+        
         private void SendPointerDownEvent()
         {
             info.activating = true;

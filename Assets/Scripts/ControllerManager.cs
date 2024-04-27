@@ -36,8 +36,8 @@ public class ControllerManager : MonoBehaviour
 
     public void EnterUI()
     {
-        LeftInteractor.interactionLayers = InteractionLayerMask.GetMask("ui");
-        RightInteractor.interactionLayers = InteractionLayerMask.GetMask("ui");
+        LeftInteractor.interactionLayers = InteractionLayerMask.GetMask("ui", "Teleport");
+        RightInteractor.interactionLayers = InteractionLayerMask.GetMask("ui", "Teleport");
         LeftInteractor.lineType = XRRayInteractor.LineType.StraightLine;
         RightInteractor.lineType = XRRayInteractor.LineType.StraightLine;
     }
