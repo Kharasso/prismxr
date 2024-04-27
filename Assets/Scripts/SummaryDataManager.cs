@@ -47,6 +47,7 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
 
     void OnClickClose()
     {
+        ControllerManager.GetInstance().ExitUI();
         Destroy(panel) ;
     }
 

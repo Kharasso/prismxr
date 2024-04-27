@@ -123,6 +123,7 @@ public class ObjectDataManager : MonoBehaviour, ISaveable
 
     void OnClickClose()
     {
+        ControllerManager.GetInstance().ExitUI();
         Destroy(panel) ;
     }
 

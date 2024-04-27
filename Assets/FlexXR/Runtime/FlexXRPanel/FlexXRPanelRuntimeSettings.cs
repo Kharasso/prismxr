@@ -45,6 +45,7 @@ namespace FlexXR.Runtime.FlexXRPanel
         [SerializeField] public FlexXRPanelMixedRealityControllerSettings controller = new();
         [Tooltip("Mixed reality GUI panel cursor settings.")]
         [SerializeField] public FlexXRPanelMixedRealityCursorSettings     cursor     = new();
+        [SerializeField] public FlexXRPanelMixedRealityCursorSettings     cursor2 = new();
     }
     
     [Serializable] public class FlexXRPanelMixedRealityCursorSettings

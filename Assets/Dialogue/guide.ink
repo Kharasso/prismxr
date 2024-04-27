@@ -7,23 +7,27 @@ Welcome to our virtual exhibition, I'm Inanna, your virtual curator. I'm thrille
 === main2 ===
 How can I help you?
 + [Can you help me orient this exhibition?]
-    This exhibition consists of two main exhibtion halls separated by a division wall. On the east side is hall 1 and on the westside is hall 2. 
-    You can use the controller to teleport to wherever you want. Simply point to a location then hit the grip button.
-    + + [Do you have a map of this exhibition?]
-        Sure thing! Here is a map.
-        -> map
-    + + [Thank you. (back to main dialogue)]
-        -> main2
+    -> map
 + [I want to know more about the background of this exhibtion?]
     -> intro
 + [I am good for now. Thank you!]
     Of course! Feel free to reach out whenever you need help!
     -> END
-
+-> main2
 
 === map ===
+This exhibition consists of two main exhibtion halls separated by a division wall. On the east side is hall 1 and on the westside is hall 2. 
+You can use the controller to teleport to wherever you want. Simply point to a location then hit the grip button.
+-> map2
 
--> END
+=== map2 ===
+Do you need any further help?
++ [Do you have a map of this exhibition?]
+    Sure thing! Here is a map.
+    -> END
++ [Thank you. (back to main dialogue)]
+    -> main2
+-> main2
 
 === intro ===
 This virtual sculpture exhibition is titled "Forms of Thought - where the timeless and the modern converge". 
@@ -38,5 +42,6 @@ Do you need any further help?
     -> intro
 + [Thank you. (back to main dialogue)]
     -> main2
+->main2
     
     

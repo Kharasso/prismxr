@@ -10,17 +10,21 @@ namespace FlexXR.Runtime.FlexXRPanel
     {
         private int     XRRayCount       => _xrRayInteractors.Count;
         private Vector3 XRRayOrigin      => _xrRayInteractors[0].rayOriginTransform.position;
+        private Vector3 XRRayOrigin2     => _xrRayInteractors[1].rayOriginTransform.position;
         private Vector3 XRRayDirection   => _xrRayInteractors[0].rayOriginTransform.forward;
+        private Vector3 XRRayDirection2  => _xrRayInteractors[1].rayOriginTransform.forward;
         private float   XRRayMaxDistance => _xrRayInteractors[0].maxRaycastDistance;
+        private float  XRRayMaxDistance2 => _xrRayInteractors[1].maxRaycastDistance;
 
         private void AwakeMixedReality()
         {
             var interactable = info.worldMesh.gameObject.AddComponent<XRSimpleInteractable>();
-            
+
             interactable.hoverEntered.AddListener(OnHoverEntered);
             interactable.hoverExited.AddListener(OnHoverExited);
             interactable.activated.AddListener(OnActivated);
             interactable.deactivated.AddListener(OnDeactivated);
+            interactable.interactionLayers = InteractionLayerMask.GetMask("ui");
         }
 
         private void UpdateMixedReality()
@@ -52,12 +56,12 @@ namespace FlexXR.Runtime.FlexXRPanel
                     xrRayInteractor.xrController.SendHapticImpulse(runtimeSettings.mixedReality.controller.hapticAmplitude, runtimeSettings.mixedReality.controller.hapticDuration);
                     _xrRayInteractors.Add(xrRayInteractor);
                     // ! For activation to work without grabbing, exactly one `XRRayInteractor` must have `hoverToSelect` enabled.
-                    var hoverToSelect = xrRayInteractor == ActiveInteractor;
+/*                    var hoverToSelect = xrRayInteractor == ActiveInteractor;
                     if (xrRayInteractor.hoverToSelect != hoverToSelect)
                     {
                         _xrRayInteractorStatesOnHoverExit.Add(xrRayInteractor, new XRRayInteractorStateOnHoverExit{hoverToSelect = xrRayInteractor.hoverToSelect});
                         xrRayInteractor.hoverToSelect = hoverToSelect;
-                    }
+                    }*/
                     break;
             }
         }
@@ -72,7 +76,7 @@ namespace FlexXR.Runtime.FlexXRPanel
                     
                     _xrRayInteractors.Remove(xrRayInteractor);
                     
-                    if (_xrRayInteractorStatesOnHoverExit.ContainsKey(xrRayInteractor))
+     /*               if (_xrRayInteractorStatesOnHoverExit.ContainsKey(xrRayInteractor))
                     {
                         xrRayInteractor.hoverToSelect = _xrRayInteractorStatesOnHoverExit[xrRayInteractor].hoverToSelect;
                         _xrRayInteractorStatesOnHoverExit.Remove(xrRayInteractor);
@@ -82,33 +86,35 @@ namespace FlexXR.Runtime.FlexXRPanel
                     {
                         ActiveInteractor.xrController.SendHapticImpulse(1.5f*runtimeSettings.mixedReality.controller.hapticAmplitude, 1.5f*runtimeSettings.mixedReality.controller.hapticDuration);  // Stronger and longer here so that it's more clear which controller is still active on the panel.
                         ActiveInteractor.hoverToSelect = true;
-                    }
+                    }*/
                     break;
             }
         }
 
         private void OnActivated(ActivateEventArgs args)
         {
-            switch (args.interactorObject)
-            {
-                case XRRayInteractor xrRayInteractor:
-                    if (_xrRayInteractors.Count == 0) return;
-                    if (xrRayInteractor != _xrRayInteractors[0]) return;
-                    SendPointerDownEvent();
-                    break;
-            }
+            /*            switch (args.interactorObject)
+                        {
+                            case XRRayInteractor xrRayInteractor:
+                                if (_xrRayInteractors.Count == 0) return;
+            *//*                    if (xrRayInteractor != _xrRayInteractors[0]) return;*//*
+                                SendPointerDownEvent();
+                                break;
+                        }*/
+            SendPointerDownEvent();
         }
 
         private void OnDeactivated(DeactivateEventArgs args)
         {
-            switch (args.interactorObject)
+  /*          switch (args.interactorObject)
             {
                 case XRRayInteractor xrRayInteractor:
                     if (_xrRayInteractors.Count == 0) return;
-                    if (xrRayInteractor != _xrRayInteractors[0]) return;
+*//*                    if (xrRayInteractor != _xrRayInteractors[0]) return;*//*
                     SendPointerUpEvent();
                     break;
-            }
+            }*/
+            SendPointerUpEvent();
         }
         #endregion
 

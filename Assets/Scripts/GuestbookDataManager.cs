@@ -155,6 +155,7 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
     {
 /*        Destroy(panel) ;*/
         panel.SetActive(false);
+        ControllerManager.GetInstance().ExitUI();
     }
 
     // open guestbook

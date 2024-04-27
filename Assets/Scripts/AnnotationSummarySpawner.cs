@@ -30,6 +30,8 @@ public class AnnotationSummarySpawner : MonoBehaviour
 
         Debug.Log(targetName);
         Debug.Log(GameObject.Find(targetName));
+        ControllerManager.GetInstance().EnterUI();
+
 
         if (GameObject.Find(targetName))
         {
@@ -52,8 +54,11 @@ public class AnnotationSummarySpawner : MonoBehaviour
 
     public void destroyAnnotationUI(GameObject caller)
     {
+        
         caller.SetActive(false);
+        ControllerManager.GetInstance().ExitUI();
         Destroy(caller);
+        
     }
 
 
