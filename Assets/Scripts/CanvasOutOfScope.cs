@@ -24,6 +24,7 @@ public class CanvasOutOfScope : MonoBehaviour
 
             if (canvasCameraDistance >= 3.0)
             {
+/*                ControllerManager.GetInstance().ExitUI();*/
                 Destroy(canvas);
             }
         }

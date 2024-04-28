@@ -31,7 +31,7 @@ public class VirtualGuestbookSpawner : MonoBehaviour
         Debug.Log(targetName);
         Debug.Log(GameObject.Find(targetName));
 
-        ControllerManager.GetInstance().EnterUI();
+/*        ControllerManager.GetInstance().EnterUI();*/
 
         if (GameObject.Find(targetName))
         {
@@ -58,7 +58,7 @@ public class VirtualGuestbookSpawner : MonoBehaviour
     {
 
         caller.SetActive(false);
-        ControllerManager.GetInstance().ExitUI();
+/*        ControllerManager.GetInstance().ExitUI();*/
         /*        Destroy(caller);*/
     }
 

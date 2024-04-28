@@ -30,7 +30,7 @@ public class AnnotationSummarySpawner : MonoBehaviour
 
         Debug.Log(targetName);
         Debug.Log(GameObject.Find(targetName));
-        ControllerManager.GetInstance().EnterUI();
+/*        ControllerManager.GetInstance().EnterUI();*/
 
 
         if (GameObject.Find(targetName))
@@ -56,7 +56,7 @@ public class AnnotationSummarySpawner : MonoBehaviour
     {
         
         caller.SetActive(false);
-        ControllerManager.GetInstance().ExitUI();
+/*        ControllerManager.GetInstance().ExitUI();*/
         Destroy(caller);
         
     }

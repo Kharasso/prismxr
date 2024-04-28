@@ -110,14 +110,14 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         isPlaying = false;
         AvatarAnimator.Play("idle");
-        ControllerManager.GetInstance().ExitUI();
+/*        ControllerManager.GetInstance().ExitUI();*/
     }
 
     void OnClickCloseMap()
     {
         mapPanel.SetActive(false);
         AvatarAnimator.Play("idle");
-        ControllerManager.GetInstance().ExitUI();
+/*        ControllerManager.GetInstance().ExitUI();*/
     }
 
     public void ReForward(Transform target, GameObject source)
@@ -129,7 +129,7 @@ public class DialogueManager : MonoBehaviour
 
     public void TriggerDialogue(TextAsset dialogueContent)
     {
-        ControllerManager.GetInstance().EnterUI();
+/*        ControllerManager.GetInstance().EnterUI();*/
         currStory = new Story(dialogueContent.text);
         isPlaying = true;
         dialoguePanel.SetActive(true);
@@ -167,7 +167,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             AvatarAnimator.Play("idle");
-            ControllerManager.GetInstance().ExitUI();
+/*            ControllerManager.GetInstance().ExitUI();*/
         }
     }
 
