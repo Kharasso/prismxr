@@ -47,10 +47,24 @@ public class DialogueManager : MonoBehaviour
         }
         instance = this;
 
+
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+
         dialoguePanel = dialogueView.transform.Find("World Content").transform.Find("Flex Mesh").gameObject;
         mapPanel = mapView.transform.Find("World Content").transform.Find("Flex Mesh").gameObject;
-        rootVisualElement = (VisualElement) dialogueView.GetComponent<FlexXRPanelManager>().flexXRPanelElements.FlexXRContentElement;
-        rootVisualElementMap = (VisualElement) mapView.GetComponent<FlexXRPanelManager>().flexXRPanelElements.FlexXRContentElement;
+        if (rootVisualElement == null)
+        {
+            rootVisualElement = (VisualElement)dialogueView.GetComponent<FlexXRPanelManager>().flexXRPanelElements.FlexXRContentElement;
+        }
+
+        if (rootVisualElementMap == null)
+        {
+            rootVisualElementMap = (VisualElement)mapView.GetComponent<FlexXRPanelManager>().flexXRPanelElements.FlexXRContentElement;
+        }
+
         dialogueLabel = rootVisualElement.Q<Label>("DialogueLabel");
         continueButton = rootVisualElement.Q<Button>("ContinueButton");
         closeButton = rootVisualElement.Q<Button>("CloseButton");
@@ -68,10 +82,6 @@ public class DialogueManager : MonoBehaviour
             RegisterButtonOnlickEvents(i);
         }
 
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         isPlaying = false;
         dialoguePanel.SetActive(false);
         mapPanel.SetActive(false);
@@ -181,7 +191,7 @@ public class DialogueManager : MonoBehaviour
         {
 
             LastKnot = currStory.state.currentPathString.Split(".")[0];
-            Debug.Log(LastKnot);
+/*            Debug.Log(LastKnot);*/
             dialogueLabel.text = currStory.Continue();
             continueButton.style.display = DisplayStyle.Flex;
             ShowChoices();
@@ -227,7 +237,7 @@ public class DialogueManager : MonoBehaviour
 
     void OnClickChoiceButton(int index)
     {
-        Debug.Log(index);
+/*        Debug.Log(index);*/
         currStory.ChooseChoiceIndex(index);
         ContinueStory();
     }

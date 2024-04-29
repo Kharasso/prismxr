@@ -1,11 +1,11 @@
 using FlexXR.Runtime.FlexXRPanel;
 using Keyboard;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -59,7 +59,7 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
 
         a_Saveables.PopulateSaveData(sd);
 
-        if (FileManager.WriteToFile(this.caller + "annotationData.dat", sd.ToJson()))
+        if (FileManager.WriteToFile(this.caller + "annotationData.json", sd.ToJson()))
         {
             Debug.Log("Save successful");
         }
@@ -72,10 +72,34 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
         artNums.Add("art1");
         artNums.Add("art2");
         artNums.Add("art3");
+        artNums.Add("art5");
+        artNums.Add("art6");
+        artNums.Add("art9");
+        artNums.Add("art10");
+        artNums.Add("art11");
+        artNums.Add("art12");
+        artNums.Add("art13");
+        artNums.Add("art14");
 
         foreach (string num in artNums)
         {
-            if (FileManager.LoadFromFile("AnnotationUI" + num + "annotationData.dat", out var json))
+            string filename = "AnnotationUI" + num + "annotationData.json";
+            var fullPath = Path.Combine(Application.persistentDataPath, filename);
+            Debug.Log(num);
+
+            if (!File.Exists(fullPath))
+            {
+                SaveData sd = new SaveData();
+                string jsonString = InitDataManager.GetInstance().artData["AnnotationUI" + num];
+                sd.LoadFromJson(jsonString);
+
+                a_Saveables.LoadArt(sd, num);
+
+                Debug.Log("Initial Load complete");
+                continue;
+            }
+
+            if (FileManager.LoadFromFile("AnnotationUI" + num + "annotationData.json", out var json))
             {
                 SaveData sd = new SaveData();
                 sd.LoadFromJson(json);
@@ -125,7 +149,7 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
 
         commentTextLabel.text = "";
 
-        Debug.Log(a_SaveData.m_guestComments.Count);
+/*        Debug.Log(a_SaveData.m_guestComments.Count);*/
 
         foreach (SaveData.CommentData commentData in a_SaveData.m_guestComments)
         {
@@ -137,8 +161,8 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
             }
 
             commentTextLabel.text = commentData.playerName + ":" + Environment.NewLine + commentData.comment + commentTextLabel.text;
-
-            Debug.Log(commentData.comment);
+/*
+            Debug.Log(commentData.comment);*/
         }
     }
 
@@ -151,7 +175,7 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
 
         commentTextLabel.text = "";
 
-        Debug.Log(a_SaveData.m_guestComments.Count);
+/*        Debug.Log(a_SaveData.m_guestComments.Count);*/
 
         foreach (SaveData.CommentData commentData in a_SaveData.m_guestComments)
         {
@@ -163,8 +187,8 @@ public class SummaryDataManager : MonoBehaviour, ISaveable
             }
 
             commentTextLabel.text = commentData.playerName + ":" + Environment.NewLine + commentData.comment + commentTextLabel.text;
-
-            Debug.Log(commentData.comment);
+/*
+            Debug.Log(commentData.comment);*/
         }
     }
 

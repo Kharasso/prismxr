@@ -1,13 +1,13 @@
 using FlexXR.Runtime.FlexXRPanel;
 using Keyboard;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
@@ -31,7 +31,7 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
 
     List<VisualElement> allItemCells = new List<VisualElement>();
     List<SaveData.CommentData> existingGuestComments = new List<SaveData.CommentData>();
-    int activeCell = 0;
+/*    int activeCell = 0;*/
     Label rightPageGuestName;
     Label rightPageCommentDate;
     Label rightPageCommentText;
@@ -267,7 +267,7 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
 
         a_Saveables.PopulateSaveData(sd);
 
-        if (FileManager.WriteToFile("guestbookData.dat", sd.ToJson()))
+        if (FileManager.WriteToFile("guestbookData.json", sd.ToJson()))
         {
             Debug.Log("Save successful");
         }
@@ -275,17 +275,30 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
 
     public void LoadJsonData(GuestbookDataManager a_Saveables)
     {
+        string filename = "guestbookData.json";
+        var fullPath = Path.Combine(Application.persistentDataPath, filename);
 
-      
-        FileManager.LoadFromFile("guestbookData.dat", out var json);
-            
-        SaveData sd = new SaveData();
-        sd.LoadFromJson(json);
-        a_Saveables.LoadFromSaveData(sd);
+        if (!File.Exists(fullPath))
+        {
+            SaveData sd = new SaveData();
+            string jsonString = InitDataManager.GetInstance().guestbookData.ToString();
+            sd.LoadFromJson(jsonString);
+            a_Saveables.LoadFromSaveData(sd);
+            Debug.Log("Initial Load complete");
+            return;
+        }
 
-        Debug.Log("Load complete");
+        if (FileManager.LoadFromFile("guestbookData.json", out var json))
+        {
 
-        
+            SaveData sd = new SaveData();
+            sd.LoadFromJson(json);
+            a_Saveables.LoadFromSaveData(sd);
+
+            Debug.Log("Load complete");
+
+        }
+
     }
 
     public void PopulateSaveData(SaveData a_SaveData)
@@ -309,7 +322,7 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
 
         existingGuestComments.Add(newGuestComment);
         a_SaveData.m_guestComments = existingGuestComments;
-        activeCell = 0;
+/*        activeCell = 0;*/
 
         // display in the existing panel as well
         renderContentCells();
@@ -327,9 +340,9 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
             existingGuestComments.Add(a_SaveData.m_guestComments.ElementAt(i)); 
         }
 
-        Debug.Log(existingGuestComments.Count);
+/*        Debug.Log(existingGuestComments.Count);*/
         renderContentCells();
-        activeCell = 0;
+/*        activeCell = 0;*/
 
         /*       commentTextLabel.text = "";
 
@@ -425,7 +438,7 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
 
         commentTextLabel.text = "";
 
-        Debug.Log(a_SaveData.m_guestComments.Count);
+/*        Debug.Log(a_SaveData.m_guestComments.Count);*/
 
         foreach (SaveData.CommentData commentData in a_SaveData.m_guestComments)
         {
@@ -438,7 +451,7 @@ public class GuestbookDataManager : MonoBehaviour, ISaveable
 
             commentTextLabel.text = commentData.playerName + ":" + Environment.NewLine + commentData.comment + commentTextLabel.text;
 
-            Debug.Log(commentData.comment);
+/*            Debug.Log(commentData.comment);*/
         }
     }
 

@@ -134,7 +134,7 @@ Transform:
   m_GameObject: {fileID: 1230038681739779034}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.14, y: 1.5, z: 0.6}
+  m_LocalPosition: {x: -0.14, y: 1.7, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -194,6 +194,11 @@ MonoBehaviour:
       cursor:
         show: 1
         texture: {fileID: 2800000, guid: 6aca6b15b1701df4bb9598145917cc8c, type: 3}
+        inactiveSize: 20
+        activeSize: 15
+      cursor2:
+        show: 1
+        texture: {fileID: 0}
         inactiveSize: 20
         activeSize: 15
     advanced:

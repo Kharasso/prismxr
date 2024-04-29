@@ -1,15 +1,16 @@
 using FlexXR.Runtime.FlexXRPanel;
 using Keyboard;
 using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using static SaveData;
+using System.IO.Enumeration;
 
 public class ObjectDataManager : MonoBehaviour, ISaveable
 {   
@@ -145,7 +146,7 @@ public class ObjectDataManager : MonoBehaviour, ISaveable
 
         a_Saveables.PopulateSaveData(sd);
 
-        if (FileManager.WriteToFile(this.caller + "annotationData.dat", sd.ToJson()))
+        if (FileManager.WriteToFile(this.caller + "annotationData.json", sd.ToJson()))
         {
             Debug.Log("Save successful");
         }
@@ -153,8 +154,22 @@ public class ObjectDataManager : MonoBehaviour, ISaveable
 
     public void LoadJsonData(ObjectDataManager a_Saveables)
     {
+        string filename = this.caller + "annotationData.json";
+        var fullPath = Path.Combine(Application.persistentDataPath, filename);
 
-        if (FileManager.LoadFromFile(this.caller + "annotationData.dat", out var json))
+        if (!File.Exists(fullPath))
+        {
+            SaveData sd = new SaveData();
+            string jsonString = InitDataManager.GetInstance().artData[this.caller];
+            sd.LoadFromJson(jsonString);
+
+            a_Saveables.LoadFromSaveData(sd);
+
+            Debug.Log("Initial Load complete");
+            return;
+        }
+
+        if (FileManager.LoadFromFile(filename, out var json))
         {
             SaveData sd = new SaveData();
             sd.LoadFromJson(json);
@@ -215,7 +230,7 @@ public class ObjectDataManager : MonoBehaviour, ISaveable
 
         commentTextLabel.text = "";
 
-        Debug.Log(a_SaveData.m_guestComments.Count);
+/*        Debug.Log(a_SaveData.m_guestComments.Count);*/
 
         foreach (SaveData.CommentData commentData in a_SaveData.m_guestComments)
         {
@@ -228,7 +243,7 @@ public class ObjectDataManager : MonoBehaviour, ISaveable
 
             commentTextLabel.text = commentData.playerName + ":" + Environment.NewLine + commentData.comment + commentTextLabel.text;
 
-            Debug.Log(commentData.comment);
+/*            Debug.Log(commentData.comment);*/
         }
     }
 

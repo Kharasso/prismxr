@@ -18,7 +18,7 @@ public class AnnotationSummarySpawner : MonoBehaviour
         Transform spawnSpot = caller.transform.Find("Spawn Spot");
 
         Vector3 newViewForward = -spawnSpot.forward;
-        Debug.Log(newViewForward);
+/*        Debug.Log(newViewForward);*/
         Vector3 newViewPosition = spawnSpot.position - newViewForward * 1.2f;
 
         GameObject.Find("XR Rig").transform.forward = newViewForward;
@@ -28,8 +28,8 @@ public class AnnotationSummarySpawner : MonoBehaviour
 
         string targetName = "AnnotationSummary";
 
-        Debug.Log(targetName);
-        Debug.Log(GameObject.Find(targetName));
+/*        Debug.Log(targetName);
+        Debug.Log(GameObject.Find(targetName));*/
 /*        ControllerManager.GetInstance().EnterUI();*/
 
 
@@ -46,7 +46,7 @@ public class AnnotationSummarySpawner : MonoBehaviour
         newObject.name = targetName;
         SummaryDataManager objDataManager =  newObject.transform.Find("SummaryDataManager").GetComponent<SummaryDataManager>();
 
-        Debug.Log(objDataManager);
+/*        Debug.Log(objDataManager);*/
 
         objDataManager.rootVisualElement = (VisualElement) newObject.GetComponent<FlexXRPanelManager>().flexXRPanelElements.FlexXRContentElement;
 
